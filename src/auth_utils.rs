@@ -14,4 +14,3 @@ pub fn logout() {
 fn private_helper() {
   // Private helper function
 }
-
