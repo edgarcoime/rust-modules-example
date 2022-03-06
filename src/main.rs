@@ -1,35 +1,50 @@
 #![allow(dead_code, unused_variables)]
 
-enum Status {
-    Connected,
-    Interrupted
+mod database {
+    pub enum Status {
+        Connected,
+        Interrupted
+    }
+
+    pub fn get_user() {
+        // Get user from database
+    }
+
+    pub fn connect_to_database() -> Status {
+        return Status::Connected
+    }
 }
 
-struct Credentials {
-    username: String,
-    password: String,
+mod auth_utils {
+    pub fn login(creds: models::Credentials) {
+        // Authenticate...
+        crate::database::get_user();
+    }
+
+    pub fn logout() {
+        // log user out...
+    }
+
+    // You can create helpers within a module that are 
+    // not exposed to public
+    fn private_helper() {
+        // Private helper function
+    }
+
+    pub mod models {
+        pub struct Credentials {
+            username: String,
+            password: String,
+        }
+    }
 }
 
-fn connect_to_database() -> Status {
-    return Status::Connected
-}
+use auth_utils::models::Credentials;
+use database::Status;
 
-fn login(creds: Credentials) {
-    // Authenticate...
-    get_user();
-}
-
-fn logout() {
-    // log user out...
-}
-
-fn get_user() {
-    // Get user from database
-}
-
-fn authenticate(creds: Credentials) {
-    if let Status::Connected = connect_to_database() {
-        login(creds)
+pub fn authenticate(creds: Credentials) {
+    if let Status::Connected = database::connect_to_database() {
+        auth_utils::login(creds)
     }
 }
 
